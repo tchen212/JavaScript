@@ -79,3 +79,6 @@
     method2 : function(){
         alert("这是方法2");
     }};//调用实例中的方法oActionListener.method1();
+
+
+//Source From : http://blog.csdn.net/ymmc001/article/details/5990021
