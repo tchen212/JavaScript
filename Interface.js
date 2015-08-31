@@ -1,87 +1,87 @@
-/**     
-* Interface¹¹ÔìÆ÷     
-* @param {String} name ½Ó¿ÚÃû     
-* @param {Array} methods ½Ó¿ÚÖĞµÄ³éÏó·½·¨          
-* @exception {Error} ²ÎÊı²»ºÏ¸ñÊ±Å×³öÒì³£     
+ï»¿/**     
+* Interfaceæ„é€ å™¨     
+* @param {String} name æ¥å£å     
+* @param {Array} methods æ¥å£ä¸­çš„æŠ½è±¡æ–¹æ³•          
+* @exception {Error} å‚æ•°ä¸åˆæ ¼æ—¶æŠ›å‡ºå¼‚å¸¸     
 * @example     
 * var IActionListener = new Interface("IActionListener",["method1","method2"]);     
 */
 var Interface = function (name, methods) {
   if (arguments.length != 2) {
-    throw new Error("InterfaceÓĞÇÒÖ»ÓĞÁ½¸ö²ÎÊı£¬¶øµ±Ç°²ÎÊı¸öÊıÎª£º" + arguments.length);
+    throw new Error("Interfaceæœ‰ä¸”åªæœ‰ä¸¤ä¸ªå‚æ•°ï¼Œè€Œå½“å‰å‚æ•°ä¸ªæ•°ä¸ºï¼š" + arguments.length);
   }
   this.name = name;
   this.methods = [];
   for (var i = 0, len = methods.length; i < len; i++) {
     if (typeof methods[i] !== 'string') {
-      throw new Error("InterfaceÖĞµÄ·½·¨Ãû±ØĞëºÏ·¨");
+      throw new Error("Interfaceä¸­çš„æ–¹æ³•åå¿…é¡»åˆæ³•");
     }
     this.methods.push(methods[i]);
   }
 };
 
 /**     
-* ½Ó¿ÚÊµÏÖµÄ¼ì²é£¬±£Ö¤objectÊÇInterfaceNµÄÊµÀı     
-* @param {Object} oInterface ´ı¼ì²éµÄ½Ó¿ÚÊµÀı     
-* @param {Class} InterfaceN ±»ÊµÏÖµÄInterface     
-* @exception {Error} ²ÎÊı²»ºÏ¸ñÊ±Å×³öÒì³£     
+* æ¥å£å®ç°çš„æ£€æŸ¥ï¼Œä¿è¯objectæ˜¯InterfaceNçš„å®ä¾‹     
+* @param {Object} oInterface å¾…æ£€æŸ¥çš„æ¥å£å®ä¾‹     
+* @param {Class} InterfaceN è¢«å®ç°çš„Interface     
+* @exception {Error} å‚æ•°ä¸åˆæ ¼æ—¶æŠ›å‡ºå¼‚å¸¸     
 * @example      
 * Interface.ensureImplements(oActionListener,IActionListener);     
 */
 Interface.ensureImplements = function (oInterface, Interface1, Interface2, InterfaceN) {
   if (arguments.length < 2) {
-    throw new Error("Interface.ensureImplements·½·¨ÖÁÉÙĞèÒªÁ½¸ö²ÎÊı£¬¶øµ±Ç°²ÎÊı¸öÊıÎª£º" + arguments.length);
+    throw new Error("Interface.ensureImplementsæ–¹æ³•è‡³å°‘éœ€è¦ä¸¤ä¸ªå‚æ•°ï¼Œè€Œå½“å‰å‚æ•°ä¸ªæ•°ä¸ºï¼š" + arguments.length);
   }
   for (var i = 1, len = arguments.length; i < len; i++) {
     var interface = arguments[i];
     if (interface.constructor !== Interface) {
-      throw new Error(interface + "²»ÊÇInterfaceµÄÊµÀı£¬²»ÊÇ½Ó¿Ú");
+      throw new Error(interface + "ä¸æ˜¯Interfaceçš„å®ä¾‹ï¼Œä¸æ˜¯æ¥å£");
     }
     for (var j = 0, methodsLen = interface.methods.length; j < methodsLen; j++) {
       var method = interface.methods[j];
       if (!oInterface[method] || typeof oInterface[method] !== 'function') {
-        throw new Error("Ëù¸ø²ÎÊıÃ»ÓĞÊµÏÖ" + interface.name + "½Ó¿Ú£¬" + method + "Î´ÕÒµ½");
+        throw new Error("æ‰€ç»™å‚æ•°æ²¡æœ‰å®ç°" + interface.name + "æ¥å£ï¼Œ" + method + "æœªæ‰¾åˆ°");
       }
     }
   }
 };
 
-//´´½¨½Ó¿Ú
+//åˆ›å»ºæ¥å£
 var IActionListener = new Interface("IActionListener", ["method1", "method2"]);
-//½Ó¿ÚÊµÀıµÄ´´½¨
+//æ¥å£å®ä¾‹çš„åˆ›å»º
 var oActionListener = {
   method1: function () {
-    alert("ÕâÊÇ·½·¨1");
+    alert("è¿™æ˜¯æ–¹æ³•1");
   },
   method2: function () {
-    alert("ÕâÊÇ·½·¨2");
+    alert("è¿™æ˜¯æ–¹æ³•2");
   }
 };
-//implementsÈ·ÈÏ
+//implementsç¡®è®¤
 Interface.ensureImplements(oActionListener, IActionListener);
-//µ÷ÓÃÊµÀıÖĞµÄ·½·¨
+//è°ƒç”¨å®ä¾‹ä¸­çš„æ–¹æ³•
 oActionListener.method1();
-/** * ½Ó¿ÚµÄÊµÏÖ 
-* @param {function} ImplementsClass ´ıÊµÏÖµÄÀà 
-* @param {object} InterfaceN ±»ÊµÏÖµÄInterface£¬InterfaceµÄÊµÀı 
-* @exception {Error} ²ÎÊı²»ºÏ¸ñÊ±Å×³öÒì³£ 
+/** * æ¥å£çš„å®ç° 
+* @param {function} ImplementsClass å¾…å®ç°çš„ç±» 
+* @param {object} InterfaceN è¢«å®ç°çš„Interfaceï¼ŒInterfaceçš„å®ä¾‹ 
+* @exception {Error} å‚æ•°ä¸åˆæ ¼æ—¶æŠ›å‡ºå¼‚å¸¸ 
 * @example  
 * implements(ActionListener,IActionListener); 
 */
 var implements = function (ImplementsClass, Interface1, Interface2, InterfaceN) {
   if (arguments.length < 2) {
-    throw new Error("Interface.ensureImplements·½·¨ÖÁÉÙĞèÒªÁ½¸ö²ÎÊı£¬¶øµ±Ç°²ÎÊı¸öÊıÎª£º" + arguments.length);
+    throw new Error("Interface.ensureImplementsæ–¹æ³•è‡³å°‘éœ€è¦ä¸¤ä¸ªå‚æ•°ï¼Œè€Œå½“å‰å‚æ•°ä¸ªæ•°ä¸ºï¼š" + arguments.length);
   }
-  //±£Ö¤ImplementsClassµÄÀàĞÍÎªfunction
+  //ä¿è¯ImplementsClassçš„ç±»å‹ä¸ºfunction
   if (typeof arguments[0] !== "function") {
-    throw new Error("ÊµÏÖÀàµÄÀàĞÍ±ØĞëÎªfunction");
+    throw new Error("å®ç°ç±»çš„ç±»å‹å¿…é¡»ä¸ºfunction");
   }
   for (var i = 1, len = arguments.length; i < len; i++) {
     var interface = arguments[i];
     if (interface.constructor !== Interface) {
-      throw new Error(interface + "²»ÊÇInterfaceµÄÊµÀı£¬²»ÊÇ½Ó¿Ú");
+      throw new Error(interface + "ä¸æ˜¯Interfaceçš„å®ä¾‹ï¼Œä¸æ˜¯æ¥å£");
     }
-    //ÕâÀïÑ­»·½øĞĞ½Ó¿Ú³éÏó·½·¨µÄÊµÏÖ
+    //è¿™é‡Œå¾ªç¯è¿›è¡Œæ¥å£æŠ½è±¡æ–¹æ³•çš„å®ç°
     for (var j = 0, methodsLen = interface.methods.length; j < methodsLen; j++) {
       var method = interface.methods[j];
       if (!arguments[0].prototype[method]) {
@@ -91,24 +91,24 @@ var implements = function (ImplementsClass, Interface1, Interface2, InterfaceN) 
   }
 }
 
-//¾­¹ıÕâÑùµÄÉı¼¶£¬ÎÒÃÇµÄ´úÂë¾Í¿ÉÒÔĞ´³ÉÕâÑùÁË£º
-//´´½¨½Ó¿Úvar IActionListener = new Interface("IActionListener",["method1","method2"]); 
-//´´½¨ÊµÏÖÀàvar ActionListener = function(){};
-//ÊµÏÖimplements(ActionListener,IActionListener);
-//Õâ¸öÊ±ºò£¬ActionListener.prototypeÒÑ¾­ÊÇÈçÏÂÕâ¸öÑù×ÓÁË£º
+//ç»è¿‡è¿™æ ·çš„å‡çº§ï¼Œæˆ‘ä»¬çš„ä»£ç å°±å¯ä»¥å†™æˆè¿™æ ·äº†ï¼š
+//åˆ›å»ºæ¥å£var IActionListener = new Interface("IActionListener",["method1","method2"]); 
+//åˆ›å»ºå®ç°ç±»var ActionListener = function(){};
+//å®ç°implements(ActionListener,IActionListener);
+//è¿™ä¸ªæ—¶å€™ï¼ŒActionListener.prototypeå·²ç»æ˜¯å¦‚ä¸‹è¿™ä¸ªæ ·å­äº†ï¼š
 /*    
   ActionListener.prototype = {        method1 : function(){},        method2 : function(){}    };
   */
-//½ÓÏÂÀ´¿ÉÒÔÕæÕıµÄÌî³ä±»¿ÕÊµÏÖµÄ·½·¨µÄÂß¼­ÁË
+//æ¥ä¸‹æ¥å¯ä»¥çœŸæ­£çš„å¡«å……è¢«ç©ºå®ç°çš„æ–¹æ³•çš„é€»è¾‘äº†
 ActionListener.prototype = {
   method1: function () {
-    alert("ÕâÊÇ·½·¨1");
+    alert("è¿™æ˜¯æ–¹æ³•1");
   },
   method2: function () {
-    alert("ÕâÊÇ·½·¨2");
+    alert("è¿™æ˜¯æ–¹æ³•2");
   }
 };
-//µ÷ÓÃÊµÀıÖĞµÄ·½·¨oActionListener.method1();
+//è°ƒç”¨å®ä¾‹ä¸­çš„æ–¹æ³•oActionListener.method1();
 
 
 //Source From : http://blog.csdn.net/ymmc001/article/details/5990021
